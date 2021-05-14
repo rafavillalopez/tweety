@@ -17,10 +17,5 @@ function add (name, content) {
   }
   module.exports = { add: add, list: list, find: find };
 
-//   add("pipo", "Holis ke tul?")
-// add("alber", "Re piola vagooo")
-// add("brayan", "con 5 peso me hago alto guiso")
-// add("yenny", "awantiiiiiiiaaaaaaaaaaaa")
 
-// console.log(find({id: 2}))
 
