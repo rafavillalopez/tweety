@@ -6,7 +6,7 @@ const bodyParser = require('body-parser')
 var socketio = require('socket.io');
 // ...
 // var server = app.listen(3000);
-// var io = socketio.listen(server);
+// var io = socketio.(server);
 
 
 const app = express(); // crea una instancia de una aplicación de express
@@ -25,7 +25,7 @@ app.use(bodyParser.json())
 app.use(morgan('tiny'))
 app.use(express.static('./public'))
 
-app.use('/', routes);
+
 
 
 
@@ -38,7 +38,10 @@ let tweetsDeEjemplo = [
 // app.get('/', function (req, res) {
 //     res.render( 'index', { tweets: tweetsDeEjemplo });
 // });
-app.listen(3000, function(){
-    console.log('Estas escuchando en el puerto 3000')
-});
+var server = app.listen(3000);
+console.log('Estas escuhando en el puerto 3000')
+
+//socket.io
+var io = socketio(server);
+app.use('/', routes(io));
 
