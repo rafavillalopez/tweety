@@ -1,6 +1,12 @@
 const express = require( 'express' );
 const morgan = require('morgan'); //middleware application logger
 const nunjucks = require( 'nunjucks' );
+const routes = require('./routes');
+const bodyParser = require('body-parser')
+var socketio = require('socket.io');
+// ...
+// var server = app.listen(3000);
+// var io = socketio.listen(server);
 
 
 const app = express(); // crea una instancia de una aplicación de express
@@ -10,8 +16,17 @@ app.set('view engine', 'html'); // hace que res.render funcione con archivos htm
 app.engine('html', nunjucks.render); // cuando le den archivos html a res.render, va a usar nunjucks
 nunjucks.configure('views'); // apunta a nunjucks al directorio correcto para los templates
 
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+
+// parse application/json
+app.use(bodyParser.json())
+
 app.use(morgan('tiny'))
 app.use(express.static('./public'))
+
+app.use('/', routes);
+
 
 
 let tweetsDeEjemplo = [
@@ -20,11 +35,10 @@ let tweetsDeEjemplo = [
     { id: 3, name: "pepe", content: "este es un tweeettt de pepe" },
 ];
 
-app.get('/', function (req, res) {
-    res.render( 'index', { tweets: tweetsDeEjemplo });
-});
-
-
+// app.get('/', function (req, res) {
+//     res.render( 'index', { tweets: tweetsDeEjemplo });
+// });
 app.listen(3000, function(){
-    console.log('Estas escuhando en el puerto 3000')
+    console.log('Estas escuchando en el puerto 3000')
 });
+
